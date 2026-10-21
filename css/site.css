@@ -238,6 +238,12 @@ a { color: inherit; }
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35), 0 0 0 3px var(--gold), 0 0 0 4px rgba(0, 0, 0, 0.5);
 }
 .pic > img, .pic > video { width: 100%; background: var(--leather); }
+/* A plate whose frame is baked into the image (the Steam About worlds loop) gets no second frame. */
+.plate-baked > video, .plate-baked > img {
+  width: 100%;
+  background: var(--leather);
+  box-shadow: 0 1px 1.4px rgba(0, 0, 0, 0.42), 0 12px 26px rgba(58, 46, 22, 0.38);
+}
 .pic::after {     /* the inset shade the plates lay over a picture's edge */
   content: '';
   position: absolute;
