@@ -231,34 +231,6 @@ a { color: inherit; }
   pointer-events: none;
 }
 
-/* ?frame=leather — the Steam About plates' frame instead (the cover's leather, a tarnished outer rule,
-   a gilt rule round the picture and the cover's corner tooling), kept to compare. */
-.frame-leather .frame {
-  --band: 26px;
-  --corner: 54px;
-  padding: var(--band);
-  border: 0;
-  border-image: none;
-  background:
-    url('../material/corner-tl.svg') left 5px top 5px / var(--corner) no-repeat,
-    url('../material/corner-tr.svg') right 5px top 5px / var(--corner) no-repeat,
-    url('../material/corner-bl.svg') left 5px bottom 5px / var(--corner) no-repeat,
-    url('../material/corner-br.svg') right 5px bottom 5px / var(--corner) no-repeat,
-    url('../material/tex-leather.webp') 0 0 / 260px repeat,
-    radial-gradient(ellipse 80% 90% at 28% 18%, var(--leather-lit) 0%, var(--leather) 52%, var(--leather-edge) 100%);
-  background-blend-mode: normal, normal, normal, normal, multiply, normal;
-  box-shadow: 0 1px 1.4px rgba(0, 0, 0, 0.42), 0 12px 26px rgba(58, 46, 22, 0.38);
-}
-.frame-leather .frame::before {
-  content: '';
-  position: absolute;
-  inset: 8px;
-  border: 1.5px solid var(--gold-tarnished);
-  opacity: 0.85;
-  pointer-events: none;
-}
-.frame-leather .pic { box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35), 0 0 0 3px var(--gold), 0 0 0 4px rgba(0, 0, 0, 0.5); }
-.frame-leather .pic::after { box-shadow: inset 0 0 38px rgba(10, 6, 2, 0.55); }
 .plate figcaption {
   max-width: 36em;
   margin: 16px auto 0;
@@ -525,8 +497,6 @@ a { color: inherit; }
     list-style: none;
   }
   .frame { padding: 6px; border-width: 14px; }
-  .frame-leather .frame { --band: 14px; --corner: 32px; border-width: 0; }
-  .frame-leather .frame::before { inset: 5px; }
   .town-card { padding: 8px; }
 }
 
