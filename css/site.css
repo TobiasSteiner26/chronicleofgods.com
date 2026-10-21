@@ -449,7 +449,7 @@ a { color: inherit; }
 .page-turn:hover { border-bottom-color: rgba(106, 63, 15, 0.5); }
 
 .town-card-closer { position: absolute; top: 4px; right: 4px; margin: 0; z-index: 2; }
-.town-card-close {
+.town-card-close, .lightbox-close {
   width: 34px;
   height: 34px;
   font: 1.1rem/1 var(--text);
@@ -459,7 +459,55 @@ a { color: inherit; }
   border-radius: 50%;
   cursor: pointer;
 }
-.town-card-close:hover { color: var(--leather-edge); background: var(--gold-bright); }
+.town-card-close:hover, .lightbox-close:hover { color: var(--leather-edge); background: var(--gold-bright); }
+
+/* ── The enlarged view: a picture opened full size over the dark of the firmament ───── */
+
+.zoomable { cursor: zoom-in; }
+
+.lightbox {
+  --room: 140px;               /* the height kept free round the picture: the ✕ above, the caption below */
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 56px 24px 24px;
+  border: 0;
+  background: transparent;
+  color: var(--parch-lore);
+  overflow: auto;
+  overscroll-behavior: contain;
+  cursor: zoom-out;
+}
+.lightbox:not(.has-caption) { --room: 80px; }
+.lightbox[open] { display: flex; animation: lightbox-open 180ms ease-out; }
+.lightbox::backdrop { background: rgba(12, 8, 3, 0.92); }
+@keyframes lightbox-open { from { opacity: 0; } }
+
+.lightbox-figure { margin: auto; }
+/* As large as the screen allows, never past the file's own width. A card, far taller than wide, opens at
+   full width and scrolls. */
+.lightbox-item {
+  width: min(calc(100vw - 48px), calc((100vh - var(--room)) * var(--ar)), var(--nw));
+  width: min(calc(100vw - 48px), calc((100dvh - var(--room)) * var(--ar)), var(--nw));
+  margin: 0 auto;
+  box-shadow: 0 0 0 1px rgba(201, 162, 39, 0.45), 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+.lightbox.is-tall .lightbox-item { width: min(calc(100vw - 48px), var(--nw)); }
+.lightbox-item .town-pin { cursor: pointer; }
+
+.lightbox-caption {
+  max-width: 40em;
+  margin: 14px auto 0;
+  font-style: italic;
+  font-size: 1rem;
+  line-height: 1.45;
+  text-align: center;
+}
+.lightbox-caption:empty { display: none; }
+
+.lightbox-closer { position: fixed; top: 12px; right: 12px; margin: 0; z-index: 2; }
 
 /* ── The Impressum page ─────────────────────────────────────────────────────────────── */
 
@@ -544,7 +592,7 @@ a { color: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   .btn { transition: none; }
-  .town-card[open] { animation: none; }
+  .town-card[open], .lightbox[open] { animation: none; }
   .sky i { animation: none; opacity: 1; }
   .town-pin { transition: none; }
 }

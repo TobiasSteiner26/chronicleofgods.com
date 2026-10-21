@@ -150,6 +150,15 @@
     </div>
   </dialog>
 
+  <!-- Any picture opens full size over the dark; the town map keeps its pins. -->
+  <dialog class="lightbox" aria-label="The picture, enlarged">
+    <form method="dialog" class="lightbox-closer"><button class="lightbox-close" aria-label="Close the picture">✕</button></form>
+    <figure class="lightbox-figure">
+      <div class="lightbox-stage"></div>
+      <figcaption class="lightbox-caption"></figcaption>
+    </figure>
+  </dialog>
+
   <div class="ornament" aria-hidden="true"></div>
 
   <section class="leaf" aria-labelledby="h-chronicle">
@@ -186,6 +195,7 @@
 </div>
 
 <script src="js/towns.js" type="module"></script>
+<script src="js/lightbox.js" type="module"></script>
 <script>
   // Respect reduced motion: the layers video waits for a click instead of looping on its own.
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
