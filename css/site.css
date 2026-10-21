@@ -208,13 +208,37 @@ a { color: inherit; }
 
 .plate { margin: 1.8em 0; padding: 0; }
 .plate-card { max-width: 760px; margin-left: auto; margin-right: auto; }
-/* A plate is framed like the Steam page's About images: the cover's leather, a tarnished outer rule,
-   a gilt rule round the picture and the cover's corner tooling. */
+/* A plate is printed into the page: a fine ink line at the picture's edge, a margin of lighter paper,
+   then the game's hand-drawn double rule with its gilt corner diamonds (the Folio cards' plate frame). */
 .frame {
+  position: relative;
+  padding: 10px;
+  border: 20px solid transparent;
+  border-image: url('../material/hand-frame-plate.svg') 20 stretch;
+  background: rgba(255, 248, 224, 0.32);
+  background-clip: padding-box;
+}
+.pic {
+  position: relative;
+  box-shadow: 0 0 0 1px rgba(58, 46, 22, 0.6), 0 1px 4px rgba(58, 46, 22, 0.28);
+}
+.pic > img, .pic > video { width: 100%; background: var(--leather); }
+.pic::after {     /* a soft shade at the picture's edge, as ink sinks into paper */
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 22px rgba(58, 46, 22, 0.3);
+  pointer-events: none;
+}
+
+/* ?frame=leather — the Steam About plates' frame instead (the cover's leather, a tarnished outer rule,
+   a gilt rule round the picture and the cover's corner tooling), kept to compare. */
+.frame-leather .frame {
   --band: 26px;
   --corner: 54px;
-  position: relative;
   padding: var(--band);
+  border: 0;
+  border-image: none;
   background:
     url('../material/corner-tl.svg') left 5px top 5px / var(--corner) no-repeat,
     url('../material/corner-tr.svg') right 5px top 5px / var(--corner) no-repeat,
@@ -225,7 +249,7 @@ a { color: inherit; }
   background-blend-mode: normal, normal, normal, normal, multiply, normal;
   box-shadow: 0 1px 1.4px rgba(0, 0, 0, 0.42), 0 12px 26px rgba(58, 46, 22, 0.38);
 }
-.frame::before {
+.frame-leather .frame::before {
   content: '';
   position: absolute;
   inset: 8px;
@@ -233,24 +257,8 @@ a { color: inherit; }
   opacity: 0.85;
   pointer-events: none;
 }
-.pic {
-  position: relative;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35), 0 0 0 3px var(--gold), 0 0 0 4px rgba(0, 0, 0, 0.5);
-}
-.pic > img, .pic > video { width: 100%; background: var(--leather); }
-/* A plate whose frame is baked into the image (the Steam About worlds loop) gets no second frame. */
-.plate-baked > video, .plate-baked > img {
-  width: 100%;
-  background: var(--leather);
-  box-shadow: 0 1px 1.4px rgba(0, 0, 0, 0.42), 0 12px 26px rgba(58, 46, 22, 0.38);
-}
-.pic::after {     /* the inset shade the plates lay over a picture's edge */
-  content: '';
-  position: absolute;
-  inset: 0;
-  box-shadow: inset 0 0 38px rgba(10, 6, 2, 0.55);
-  pointer-events: none;
-}
+.frame-leather .pic { box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35), 0 0 0 3px var(--gold), 0 0 0 4px rgba(0, 0, 0, 0.5); }
+.frame-leather .pic::after { box-shadow: inset 0 0 38px rgba(10, 6, 2, 0.55); }
 .plate figcaption {
   max-width: 36em;
   margin: 16px auto 0;
@@ -325,79 +333,119 @@ a { color: inherit; }
   filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.35));
 }
 
+/* The town opens as a spread of the Chronicle's book: the leather cover round two pages, the land on the
+   left page under the town's name, the card on the right, the gutter's shade between them. */
 .town-card {
-  width: min(1220px, calc(100vw - 24px));
+  --spread-h: min(820px, calc(100vh - 48px));
+  width: min(1180px, calc(100vw - 24px));
   max-height: calc(100vh - 24px);
-  padding: 18px clamp(16px, 2.4vw, 28px) 20px;
-  border: 20px solid transparent;
-  border-image: url('../material/hand-frame-plate.svg') 20 stretch;
-  background: var(--paper-bg);
-  background-origin: border-box;
+  padding: 14px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--leather-bg);
+  background-color: var(--leather);
+  background-blend-mode: normal, multiply, normal;
+  box-shadow: inset 0 0 0 1px rgba(138, 111, 42, 0.55), inset 0 0 0 3px var(--leather-edge), 0 30px 80px rgba(0, 0, 0, 0.6);
   color: var(--ink);
   overflow: auto;
 }
-.town-card::backdrop { background: rgba(12, 8, 3, 0.72); }
-.town-card[open] { animation: card-open 180ms ease-out; }
-@keyframes card-open { from { opacity: 0; transform: translateY(6px) scale(0.985); } }
+.town-card::backdrop { background: rgba(12, 8, 3, 0.74); }
+.town-card[open] { animation: card-open 220ms ease-out; }
+@keyframes card-open { from { opacity: 0; transform: translateY(8px) scale(0.985); } }
 
-.town-card-head {
+.town-card-body {
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 16px;
-  margin: 0 44px 14px 0;  /* clear the close button */
-  text-align: center;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  height: var(--spread-h);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
-.town-card-step { font-size: 1.05rem; padding: 0.35em 1em 0.4em; cursor: pointer; }
-.town-card-head h3 {
+.page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 26px clamp(18px, 2.6vw, 36px) 18px;
+  background: var(--paper-bg);
+}
+/* The gutter: each page darkens towards the spine, as the game's own book does. */
+.page-left { box-shadow: inset -26px 0 30px -18px rgba(60, 40, 10, 0.45); border-radius: 3px 0 0 3px; }
+.page-right { box-shadow: inset 26px 0 30px -18px rgba(60, 40, 10, 0.45); border-radius: 0 3px 3px 0; align-items: center; }
+
+.town-card-title { text-align: center; margin: 0 0 14px; }
+.town-card-title h3 {
   margin: 0;
   font-family: var(--title);
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(1.8rem, 3.4vw, 2.4rem);
-  line-height: 1.1;
+  font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+  line-height: 1.05;
   color: var(--ink-title);
 }
-.town-card-kind { margin: 2px 0 0; font-style: italic; color: var(--ink-soft); }
-.town-card-closer { position: absolute; top: 16px; right: 16px; margin: 0; }
-.town-card-close {
-  width: 40px;
-  height: 40px;
-  font: 1.25rem/1 var(--text);
-  color: var(--ink);
-  background: var(--btn-flat);
-  border: 3px solid transparent;
-  border-image: url('../material/hand-frame-btn.svg') 3 / 3px stretch;
-  cursor: pointer;
-}
-/* The land close up beside the card at its in-game size; the card scrolls in its own column. */
-.town-card-body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 448px;
-  gap: 18px;
-  align-items: start;
+.town-card-kind { margin: 4px 0 0; font-family: var(--head); letter-spacing: 0.05em; color: var(--ink-soft); }
+.town-card-title::after {      /* the swelled rule under a chapter's heading */
+  content: '';
+  display: block;
+  width: 110px;
+  height: 7px;
+  margin: 10px auto 0;
+  background: url('../material/swell.svg') center / 100% 100% no-repeat;
+  opacity: 0.8;
 }
 .town-card-land {
+  flex: 1 1 auto;
+  min-height: 0;
   width: 100%;
-  max-height: calc(100vh - 260px);
   object-fit: cover;
-  border: 1px solid rgba(122, 95, 34, 0.55);
+  box-shadow: 0 0 0 1px rgba(58, 46, 22, 0.6), 0 1px 4px rgba(58, 46, 22, 0.28);
 }
-.town-card-sheet {
-  max-height: calc(100vh - 260px);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(122, 95, 34, 0.6) transparent;
-}
-.town-card-img { width: 100%; }
 .town-card-caption {
-  max-width: 36em;
   margin: 14px auto 0;
+  max-width: 30em;
   font-style: italic;
   text-align: center;
   color: var(--ink-soft);
 }
+.town-card-sheet {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: min(100%, 448px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(122, 95, 34, 0.6) transparent;
+  filter: drop-shadow(0 3px 6px rgba(58, 46, 22, 0.3));
+}
+.town-card-img { width: 100%; }
+
+/* Page-turns at the foot of each page, named for the town they lead to. */
+.page-turn {
+  align-self: flex-start;
+  margin-top: 12px;
+  padding: 4px 2px;
+  font-family: var(--title);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--ink-title);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+}
+.page-right .page-turn { align-self: flex-end; }
+.page-turn:hover { border-bottom-color: rgba(106, 63, 15, 0.5); }
+
+.town-card-closer { position: absolute; top: 4px; right: 4px; margin: 0; z-index: 2; }
+.town-card-close {
+  width: 34px;
+  height: 34px;
+  font: 1.1rem/1 var(--text);
+  color: var(--gold-bright);
+  background: var(--leather-edge);
+  border: 1px solid rgba(201, 162, 39, 0.6);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.town-card-close:hover { color: var(--leather-edge); background: var(--gold-bright); }
 
 /* ── The Impressum page ─────────────────────────────────────────────────────────────── */
 
@@ -446,11 +494,19 @@ a { color: inherit; }
   .sheet::after { inset: 6px; }
 }
 
-/* Too narrow for the land and the card side by side: the card first, the land below it. */
+/* Too narrow for a spread: one page, the name, the card, then the land below it; the whole book scrolls. */
 @media (max-width: 900px) {
-  .town-card-body { grid-template-columns: 1fr; }
-  .town-card-sheet { order: -1; max-width: 448px; margin: 0 auto; max-height: none; overflow: visible; }
-  .town-card-land { max-height: none; }
+  .page { display: contents; }
+  .town-card-body {
+    display: flex; flex-direction: column; align-items: center; height: auto;
+    padding: 22px 16px 16px; background: var(--paper-bg); border-radius: 3px;
+  }
+  .town-card-title { order: 1; }
+  .town-card-sheet { order: 2; overflow: visible; filter: none; }
+  .town-card-land { order: 3; margin-top: 16px; flex: none; height: auto; }
+  .town-card-caption { order: 4; }
+  .page-turn { order: 5; align-self: stretch; text-align: center; }
+  .page-right .page-turn { order: 6; align-self: stretch; }
 }
 
 @media (max-width: 700px) {
@@ -468,13 +524,10 @@ a { color: inherit; }
     padding: 0;
     list-style: none;
   }
-  .frame { --band: 14px; --corner: 32px; }
-  .frame::before { inset: 5px; }
-  .town-card { padding: 14px 10px 18px; border-width: 12px; }
-  .town-card-head { gap: 8px; margin-right: 40px; }
-  .town-card-closer { top: 8px; right: 8px; }
-  .step-word { display: none; }
-  .town-card-step { padding: 0.25em 0.7em 0.3em; font-size: 1.3rem; }
+  .frame { padding: 6px; border-width: 14px; }
+  .frame-leather .frame { --band: 14px; --corner: 32px; border-width: 0; }
+  .frame-leather .frame::before { inset: 5px; }
+  .town-card { padding: 8px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

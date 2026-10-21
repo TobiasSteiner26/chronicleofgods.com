@@ -12,6 +12,7 @@ if (dialog && pins.length && typeof dialog.showModal === 'function') {
   const sheetEl = dialog.querySelector('.town-card-sheet')
   const captionEl = dialog.querySelector('.town-card-caption')
   let current = -1
+  const nameOf = (i) => pins[i].querySelector('.pin-name').textContent
 
   const setImage = (img, src, size, alt) => {
     const [w, h] = (size || '').split('x').map(Number)
@@ -31,6 +32,13 @@ if (dialog && pins.length && typeof dialog.showModal === 'function') {
     setImage(landEl, pin.dataset.land, pin.dataset.landSize, `The land around ${name}, close up.`)
     setImage(cardEl, pin.getAttribute('href'), pin.dataset.cardSize, pin.dataset.alt || '')
     sheetEl.scrollTop = 0
+    dialog.scrollTop = 0
+    // The page-turns name the town they lead to.
+    for (const b of dialog.querySelectorAll('[data-step]')) {
+      const to = nameOf((current + Number(b.dataset.step) + pins.length) % pins.length)
+      b.textContent = b.dataset.step === '-1' ? `‹ ${to}` : `${to} ›`
+      b.setAttribute('aria-label', `${b.dataset.step === '-1' ? 'Previous' : 'Next'} town: ${to}`)
+    }
     for (const p of pins) p.removeAttribute('aria-current')
     pin.setAttribute('aria-current', 'true')
   }

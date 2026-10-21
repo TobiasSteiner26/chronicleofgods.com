@@ -20,6 +20,7 @@
 <link rel="preload" href="fonts/im-fell-english-latin-400-italic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/eb-garamond-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/site.css">
+<script>/* comparison switch: ?frame=leather shows the Steam About plates' frame */ if (/[?&]frame=leather\b/.test(location.search)) document.documentElement.classList.add('frame-leather')</script>
 </head>
 <body>
 <header class="cover">
@@ -65,14 +66,16 @@
   <section class="leaf" aria-labelledby="h-world">
     <h2 id="h-world">A world with its own history</h2>
     <p>Every world, down to its continents and rivers, grows from a word you choose. You also decide how warm it is and how much mineral wealth lies in its ground.</p>
-    <figure class="plate plate-baked">
-      <video class="worlds" autoplay muted loop playsinline preload="metadata" poster="video/worlds-poster.webp" width="1232" height="616" aria-label="Six newly made worlds, two at a time: Glimmerfen and Thalassa, Veyra and Wyrmrest, Aethel and Eryndor.">
-        <source src="video/worlds.webm" type="video/webm">
-        <source src="video/worlds.mp4" type="video/mp4">
-      </video>
+    <figure class="plate">
+      <div class="frame"><div class="pic">
+        <video class="worlds" autoplay muted loop playsinline preload="metadata" poster="video/worlds-poster.webp" width="1180" height="564" aria-label="Six newly made worlds, two at a time: Glimmerfen and Thalassa, Veyra and Wyrmrest, Aethel and Eryndor.">
+          <source src="video/worlds.webm" type="video/webm">
+          <source src="video/worlds.mp4" type="video/mp4">
+        </video>
+      </div></div>
       <figcaption>Six worlds in their first year, each grown from its own word, from scorching Thalassa to cold Wyrmrest.</figcaption>
     </figure>
-    <p>Bands of foragers wander it, learn to farm and settle.</p>
+    <p>A single world can run for thousands of years. It lives on its own, and what you do changes its course.</p>
     <figure class="plate">
       <div class="frame"><div class="pic">
         <video class="layers" autoplay muted loop playsinline preload="metadata" poster="video/layers-poster.webp" width="1232" height="910" aria-label="One world shown through five map layers in turn: the land, its realms, their governments, its cultures and its crops.">
@@ -82,42 +85,41 @@
         </div></div>
       <figcaption>One world, five of its map layers: the land, its realms, their governments, its cultures and its crops.</figcaption>
     </figure>
-    <p>A single world can run for thousands of years. It lives on its own, and what you do changes its course.</p>
   </section>
 
   <section class="leaf" id="towns" aria-labelledby="h-towns">
     <h2 id="h-towns">Its towns</h2>
-    <p>Villages grow into cities, and some cities become the seats of realms.</p>
+    <p>Bands of foragers wander it, learn to farm and settle. Villages grow into cities, and some cities become the seats of realms.</p>
     <figure class="plate town-map">
       <div class="frame"><div class="pic map-frame">
         <img src="img/towns/map.webp" srcset="img/towns/map-1100.webp 1100w, img/towns/map.webp 1920w" sizes="(max-width: 1100px) 100vw, 940px" width="1920" height="1080" loading="lazy" alt="A stretch of one world’s map in the year 3060: farmland, forests, rivers and roads, dotted with towns and nomad camps. Six towns are marked.">
         <a class="town-pin pin-west" href="img/towns/namvang-card.webp" style="left: 40.32%; top: 32.61%"
-           data-kind="City · Seat of Power" data-card-size="896x2219"
+           data-kind="City · Seat of Power" data-card-size="848x2117"
            data-land="img/towns/namvang-land.webp" data-land-size="1000x918"
            data-caption="The seat of the Nanyi Confederacy: wealthy, its granary full, with a palace and a library."
            data-alt="Namvang’s card: a wealthy city of some 1,800 souls, seat of the Nanyi Confederacy, with a palace and a library."><span class="pin-name">Namvang</span></a>
         <a class="town-pin" href="img/towns/danyag-card.webp" style="left: 68.2%; top: 54.05%"
-           data-kind="City · Holy City" data-card-size="896x2368"
+           data-kind="City · Holy City" data-card-size="848x2266"
            data-land="img/towns/danyag-land.webp" data-land-size="1000x918"
            data-caption="The largest city in this world, some 2,000 souls: seat of the Kraal of Vedesh, with a temple."
            data-alt="Danyag’s card: a wealthy holy city of some 2,000 souls, seat of the Kraal of Vedesh, with a temple."><span class="pin-name">Danyag</span></a>
         <a class="town-pin" href="img/towns/youdou-card.webp" style="left: 89.7%; top: 62.96%"
-           data-kind="City · Holy City" data-card-size="896x2644"
+           data-kind="City · Holy City" data-card-size="848x2542"
            data-land="img/towns/youdou-land.webp" data-land-size="1000x918"
            data-caption="Seat of the Kingdom of Youdoungo: wealthy, but its bellies are lean, its people grumbling and its roads lawless."
            data-alt="Youdou’s card: a holy city of some 910 souls, seat of the Kingdom of Youdoungo, with lean bellies, grumbling and lawless roads, and a palace, a library and a temple."><span class="pin-name">Youdou</span></a>
         <a class="town-pin" href="img/towns/nadnda-card.webp" style="left: 48.61%; top: 40.83%"
-           data-kind="Hamlet · Great Market" data-card-size="896x2344"
+           data-kind="Hamlet · Great Market" data-card-size="848x2242"
            data-land="img/towns/nadnda-land.webp" data-land-size="1000x918"
            data-caption="A great market fallen to a hamlet: once some 1,500 souls, now some 320, poor, its granary bare."
            data-alt="Nadnda’s card: a poor hamlet of some 320 souls that was once a great market of some 1,500."><span class="pin-name">Nadnda</span></a>
         <a class="town-pin" href="img/towns/lanyag-card.webp" style="left: 73.31%; top: 19.92%"
-           data-kind="Hamlet · Port" data-card-size="896x2098"
+           data-kind="Hamlet · Port" data-card-size="848x1996"
            data-land="img/towns/lanyag-land.webp" data-land-size="1000x918"
            data-caption="A port founded fourteen years ago: destitute still, selling stone and timber."
            data-alt="Lanyag’s card: a destitute port hamlet of some 160 souls, founded in 3046, selling stone and timber."><span class="pin-name">Lanyag</span></a>
         <a class="town-pin" href="img/towns/nandad-card.webp" style="left: 25.12%; top: 75.75%"
-           data-kind="Hamlet · Granary" data-card-size="896x1949"
+           data-kind="Hamlet · Granary" data-card-size="848x1847"
            data-land="img/towns/nandad-land.webp" data-land-size="1000x918"
            data-caption="A farming hamlet of some 90 souls on perilous roads: destitute, but its granary is full."
            data-alt="Nandad’s card: a destitute granary hamlet of some 90 souls, its granary full."><span class="pin-name">Nandad</span></a>
@@ -126,21 +128,24 @@
     </figure>
   </section>
 
+  <!-- A town opens like a spread of the Chronicle's book: its land on the left page, its card on the right. -->
   <dialog class="town-card" aria-labelledby="town-card-name">
-    <header class="town-card-head">
-      <button class="btn town-card-step" type="button" data-step="-1" aria-label="Previous town">‹<span class="step-word"> Previous</span></button>
-      <div class="town-card-title">
-        <h3 id="town-card-name"></h3>
-        <p class="town-card-kind"></p>
-      </div>
-      <button class="btn town-card-step" type="button" data-step="1" aria-label="Next town"><span class="step-word">Next </span>›</button>
-    </header>
-    <form method="dialog" class="town-card-closer"><button class="town-card-close" aria-label="Close the card">✕</button></form>
+    <form method="dialog" class="town-card-closer"><button class="town-card-close" aria-label="Close the book">✕</button></form>
     <div class="town-card-body">
-      <img class="town-card-land" alt="">
-      <div class="town-card-sheet" tabindex="0"><img class="town-card-img" alt=""></div>
+      <div class="page page-left">
+        <header class="town-card-title">
+          <h3 id="town-card-name"></h3>
+          <p class="town-card-kind"></p>
+        </header>
+        <img class="town-card-land" alt="">
+        <p class="town-card-caption"></p>
+        <button class="page-turn" type="button" data-step="-1"></button>
+      </div>
+      <div class="page page-right">
+        <div class="town-card-sheet" tabindex="0"><img class="town-card-img" alt=""></div>
+        <button class="page-turn" type="button" data-step="1"></button>
+      </div>
     </div>
-    <p class="town-card-caption"></p>
   </dialog>
 
   <div class="ornament" aria-hidden="true"></div>
