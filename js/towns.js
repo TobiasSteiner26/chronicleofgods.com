@@ -35,15 +35,28 @@ if (dialog && pins.length && typeof dialog.showModal === 'function') {
     pin.setAttribute('aria-current', 'true')
   }
 
+  const open = (i) => (e) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return  // let "open in new tab" through
+    e.preventDefault()
+    show(i)
+    dialog.showModal()
+  }
+
+  // On a phone the map is too small for six ribbons: the names move into a row of ribbons under it.
+  const list = document.createElement('ul')
+  list.className = 'town-list'
   for (const [i, pin] of pins.entries()) {
     pin.setAttribute('aria-haspopup', 'dialog')
-    pin.addEventListener('click', (e) => {
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return  // let "open in new tab" through
-      e.preventDefault()
-      show(i)
-      dialog.showModal()
-    })
+    pin.addEventListener('click', open(i))
+    const chip = document.createElement('a')
+    chip.className = 'town-chip'
+    chip.href = pin.getAttribute('href')
+    chip.textContent = pin.querySelector('.pin-name').textContent
+    chip.setAttribute('aria-haspopup', 'dialog')
+    chip.addEventListener('click', open(i))
+    list.appendChild(document.createElement('li')).appendChild(chip)
   }
+  pins[0].closest('.frame')?.after(list)
 
   for (const b of dialog.querySelectorAll('[data-step]')) {
     b.addEventListener('click', () => show(current + Number(b.dataset.step)))
