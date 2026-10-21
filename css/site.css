@@ -32,6 +32,8 @@
   --head: 'IM Fell English SC', 'EB Garamond', Georgia, serif;
 
   --measure: 38rem;
+  --book-w: 1260px;
+  --void: #0c0803;
   --gutter: 16px;
 
   --leather-bg:
@@ -48,14 +50,17 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { background: var(--leather-edge); }
+html { background: var(--void); }
 
+/* The page is the start menu's firmament; the book (cover, sheet, colophon) hangs in it. */
 body {
   margin: 0;
   min-height: 100vh;
-  background: var(--leather-bg);
-  background-color: var(--leather);
-  background-blend-mode: normal, multiply, normal;  /* the grain multiplied over the lit radial, as the game's cover */
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(201, 162, 39, 0.10), transparent 62%),
+    radial-gradient(ellipse at 50% 50%, transparent 42%, rgba(0, 0, 0, 0.55)),
+    var(--void);
+  background-attachment: fixed;
   color: var(--ink);
   font-family: var(--text);
   font-size: 1.125rem;
@@ -69,6 +74,43 @@ img, video { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
 
 :focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
+
+/* ── The firmament: the start menu's own star table, split into a band each side of the book ── */
+
+.sky {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 0;
+  width: max(0px, calc((100vw - var(--book-w)) / 2 - 12px));
+  pointer-events: none;
+}
+.sky-l { left: 0; }
+.sky-r { right: 0; }
+.sky i {
+  position: absolute;
+  border-radius: 50%;
+  color: rgba(245, 234, 205, 0.92);
+  background: currentColor;
+  box-shadow: 0 0 2px currentColor;
+  animation: star-cycle 30s ease-in-out infinite;
+}
+.sky i.dim { color: rgba(214, 196, 150, 0.5); }
+/* Visible most of the cycle, briefly gone: the constellation shifts slowly, as on the start menu. */
+@keyframes star-cycle { 0% { opacity: 0; } 8% { opacity: 1; } 76% { opacity: 1; } 90% { opacity: 0; } 100% { opacity: 0; } }
+
+.book {
+  position: relative;
+  z-index: 1;
+  width: min(var(--book-w), 100% - 16px);
+  margin: clamp(8px, 2.2vw, 32px) auto;
+  background: var(--leather-bg);
+  background-color: var(--leather);
+  background-blend-mode: normal, multiply, normal;  /* the grain multiplied over the lit radial, as the game's cover */
+  border: 2px solid var(--leather-edge);
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px rgba(138, 111, 42, 0.45), 0 24px 70px rgba(0, 0, 0, 0.7), 0 0 140px rgba(201, 162, 39, 0.07);
+}
 
 /* ── The cover: blind-tooled leather, the title in gilt ─────────────────────────────── */
 
@@ -503,6 +545,7 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .btn { transition: none; }
   .town-card[open] { animation: none; }
+  .sky i { animation: none; opacity: 1; }
   .town-pin { transition: none; }
 }
 
