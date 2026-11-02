@@ -136,23 +136,35 @@ a { color: inherit; }
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.55), 0 0 28px rgba(201, 162, 39, 0.18);
 }
 
-.globes {
+/* The store's key art (the C12 heavens over an unsettled horizon), its edges sunk into the leather. */
+.cover-art {
   display: block;
   margin: clamp(20px, 4vw, 44px) auto 0;
   max-width: 1180px;
 }
-.globes img {
+/* A horizon, not a disc: the sides and the foot fade out, the night sky above sinks into the leather. */
+.cover-art img {
   width: 100%;
-  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 72%, transparent 100%);
-          mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 72%, transparent 100%);
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 14%, #000 86%, transparent),
+    linear-gradient(to bottom, transparent, #000 30%, #000 72%, transparent);
+  -webkit-mask-composite: source-in;
+          mask-image:
+    linear-gradient(to right, transparent, #000 14%, #000 86%, transparent),
+    linear-gradient(to bottom, transparent, #000 30%, #000 72%, transparent);
+          mask-composite: intersect;
 }
 
+/* The one long line of text on the leather: the lightest parchment (not the yellower lore tone), a touch heavier
+   than the body, and a dark halo so the blind-tooled stars behind it never cross a stroke. */
 .tagline {
   max-width: 31em;
   margin: clamp(20px, 3vw, 36px) auto 0;
   font-size: clamp(1.2rem, 2.1vw, 1.45rem);
+  font-weight: 460;
   line-height: 1.5;
-  color: var(--parch-lore);
+  color: var(--parch);
+  text-shadow: 0 1px 2px rgba(12, 8, 3, 0.85), 0 0 14px rgba(12, 8, 3, 0.6);
 }
 
 .actions {
@@ -167,10 +179,11 @@ a { color: inherit; }
 .status {
   margin: 18px 0 0;
   font-style: italic;
-  color: var(--gold-tarnished);
+  color: var(--gold-bright);     /* the tarnished gold read 3.4:1 on the lit leather */
+  text-shadow: 0 1px 2px rgba(12, 8, 3, 0.8);
 }
 
-.quiet-link { color: var(--parch-lore); text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.quiet-link { color: var(--parch); text-underline-offset: 4px; text-decoration-thickness: 1px; }
 .quiet-link:hover { color: var(--gold-bright); }
 
 /* ── Buttons: the game's flat fills inside a hand-drawn frame ───────────────────────── */
@@ -509,6 +522,62 @@ a { color: inherit; }
 
 .lightbox-closer { position: fixed; top: 12px; right: 12px; margin: 0; z-index: 2; }
 
+/* ── The press kit: the cover without its art, then the sheet of facts and files ─────── */
+
+.cover-compact .cover-frame { padding-bottom: clamp(110px, 12vw, 150px); }
+.title a { color: inherit; text-decoration: none; }
+.kicker {
+  margin: 14px 0 0;
+  font-family: var(--head);
+  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+  letter-spacing: 0.08em;
+  color: var(--gold-bright);
+  text-shadow: 0 1px 2px rgba(12, 8, 3, 0.8);
+}
+.btn-sub { display: block; font-family: var(--text); font-size: 0.85rem; letter-spacing: 0; opacity: 0.8; }
+
+/* The fact sheet: a ledger of term and value, two columns where there is room. */
+.facts { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 0.45em 1.4em; }
+.facts dt { font-family: var(--head); letter-spacing: 0.03em; color: var(--ink-title); }
+.facts dd { margin: 0; overflow-wrap: anywhere; }
+.facts a, .leaf a { text-underline-offset: 3px; text-decoration-thickness: 1px; }
+
+/* Copy meant to be lifted whole: set off by a rule, the way the book sets off a quoted line. */
+.quote {
+  margin: 0 0 1em;
+  padding: 0.2em 0 0.2em 1em;
+  border-left: 2px solid rgba(106, 63, 15, 0.45);
+  font-style: italic;
+}
+.about-copy h3 {
+  margin: 1.2em 0 0.3em;
+  font-family: var(--head);
+  font-weight: 400;
+  font-size: 1.2rem;
+  letter-spacing: 0.03em;
+  color: var(--ink-title);
+}
+.about-copy ul { margin: 0 0 1em; padding-left: 1.2em; }
+.about-copy li { margin: 0 0 0.45em; }
+
+/* A grid of files: each a small printed picture, its name, and what you get when you take it. */
+.press-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: 28px 24px;
+  margin: 1.4em 0 0;
+  padding: 0;
+  list-style: none;
+}
+.press-grid li { margin: 0; }
+.press-grid a.shot { display: block; }
+.press-grid .pic img { width: 100%; background: var(--leather); }
+.press-grid .on-leather { background: var(--leather-bg); background-color: var(--leather); background-blend-mode: normal, multiply, normal; padding: 18px; }
+.press-grid .on-leather img { background: none; }
+.press-grid p { margin: 8px 0 0; font-size: 1rem; line-height: 1.4; }
+.press-grid .file { display: block; font-size: 0.9rem; color: var(--ink-soft); }
+.leaf .press-grid { max-width: none; }
+
 /* ── The Impressum page ─────────────────────────────────────────────────────────────── */
 
 .legal { margin-top: clamp(24px, 5vw, 56px); }
@@ -531,7 +600,7 @@ a { color: inherit; }
 .colophon a { text-underline-offset: 4px; text-decoration-thickness: 1px; }
 .colophon a:hover { color: var(--gold-bright); }
 .colophon p { margin: 12px 0 0; }
-.colophon .small { font-size: 0.9rem; color: var(--gold-tarnished); }
+.colophon .small { font-size: 0.95rem; color: var(--parch-lore-low); }
 
 .socials {
   display: flex;
@@ -549,8 +618,12 @@ a { color: inherit; }
 /* ── Narrow screens ─────────────────────────────────────────────────────────────────── */
 
 @media (max-width: 700px) {
-  .cover-frame { padding-bottom: 110px; }
-  .globes { max-width: 420px; }
+  /* A phone keeps the tooled frame but gives its width back to the text: at the old 28 px border plus padding the
+     tagline ran in a 237 px column, four words a line. */
+  .cover { padding: 12px 6px 0; }
+  .cover-frame { border-width: 16px; padding: 28px 6px 110px; }
+  .tagline { font-size: 1.2rem; line-height: 1.55; }
+  .cover-art { max-width: 420px; }
   .sheet { margin-left: 8px; margin-right: 8px; }
   .leaf p { hyphens: auto; }
   .sheet::after { inset: 6px; }
@@ -588,6 +661,8 @@ a { color: inherit; }
   }
   .frame { padding: 6px; border-width: 14px; }
   .town-card { padding: 8px; }
+  .facts { grid-template-columns: 1fr; gap: 0; }
+  .facts dt { margin-top: 0.7em; }
 }
 
 @media (prefers-reduced-motion: reduce) {
