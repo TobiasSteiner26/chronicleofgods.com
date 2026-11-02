@@ -1,4 +1,4 @@
-// The enlarged view: a picture on the page (the globes, a plate, a looping video, the town map, a town's land
+// The enlarged view: a picture on the page (the cover's key art, a plate, a looping video, the town map, a town's land
 // or card) opens full size over the dark on a click, Enter or Space. A plate keeps its printed ink edge and
 // the town map keeps its pins, which open their towns as on the page. Esc, the ✕ or a click elsewhere closes it.
 // Without script the pictures simply stay as they are.
@@ -26,13 +26,14 @@ if (box && typeof box.showModal === 'function') {
     for (const a of ['tabindex', 'role', 'aria-haspopup', 'class', 'loading']) media.removeAttribute(a)
 
     if (media.tagName === 'IMG') {
-      // A srcset picks its own file for the bigger box; a lone image (the globes) keeps the file the page chose.
+      // A srcset picks its own file for the bigger box (a phone's cover crop opens as the whole wide art); a
+      // lone image keeps the file the page chose.
       if (media.srcset) media.sizes = '100vw'
       else media.src = el.currentSrc || el.src
     } else {
       media.currentTime = el.currentTime
     }
-    // The globes fade into the leather through a mask; the enlarged copy keeps it.
+    // The cover art fades into the leather through a mask; the enlarged copy keeps it.
     const cs = getComputedStyle(el)
     if (cs.maskImage && cs.maskImage !== 'none') media.style.maskImage = cs.maskImage
     if (cs.webkitMaskImage && cs.webkitMaskImage !== 'none') media.style.webkitMaskImage = cs.webkitMaskImage
@@ -63,7 +64,7 @@ if (box && typeof box.showModal === 'function') {
   }
 
   // A looping video given controls (reduced motion) keeps its own click: it plays and pauses.
-  const targets = [...document.querySelectorAll('.globes img, .plate .pic > img, .plate .pic > video, .town-card-land, .town-card-img')]
+  const targets = [...document.querySelectorAll('.cover-banner img, .plate .pic > img, .plate .pic > video, .town-card-land, .town-card-img')]
     .filter((el) => !(el.tagName === 'VIDEO' && el.controls))
   for (const el of targets) {
     el.tabIndex = 0

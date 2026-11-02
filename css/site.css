@@ -21,7 +21,7 @@
   --parch-lore: #e3d3a8;
   --parch-lore-low: #dccb9a;
   --ink: #3a2e16;
-  --ink-soft: #6b551f;
+  --ink-soft: #4a3a16;    /* was #6b551f: a golden brown that read as yellow, ~4:1 where the paper darkens */
   --ink-title: #6a3f0f;
   --accent: #7e241a;
   --btn-flat: #ebdfbf;
@@ -136,27 +136,34 @@ a { color: inherit; }
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.55), 0 0 28px rgba(201, 162, 39, 0.18);
 }
 
-/* The store's key art (the C12 heavens over an unsettled horizon), its edges sunk into the leather. */
-.cover-art {
-  display: block;
-  margin: clamp(20px, 4vw, 44px) auto 0;
-  max-width: 1180px;
+/* The banner: the store's key art (the C12 heavens over an unsettled horizon) edge to edge across the top of the
+   book, the title on its night sky as on the Steam capsule, its foot sinking into the leather. The tooled frame
+   starts under it and holds the tagline. */
+.cover-banner {
+  position: relative;
+  margin: calc(-1 * clamp(16px, 3vw, 36px)) calc(-1 * var(--gutter)) 0;   /* out to the book's edge, over .cover's padding */
+  border-radius: 4px 4px 0 0;
+  overflow: hidden;
 }
-/* A horizon, not a disc: the sides and the foot fade out, the night sky above sinks into the leather. */
-.cover-art img {
+.cover-banner img {
   width: 100%;
-  -webkit-mask-image:
-    linear-gradient(to right, transparent, #000 14%, #000 86%, transparent),
-    linear-gradient(to bottom, transparent, #000 30%, #000 72%, transparent);
-  -webkit-mask-composite: source-in;
-          mask-image:
-    linear-gradient(to right, transparent, #000 14%, #000 86%, transparent),
-    linear-gradient(to bottom, transparent, #000 30%, #000 72%, transparent);
-          mask-composite: intersect;
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent);
+          mask-image: linear-gradient(to bottom, #000 72%, transparent);
 }
+.banner-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 4%;
+  text-align: center;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.8), 0 0 30px rgba(12, 8, 3, 0.9);
+}
+.cover-banner + .cover-frame { margin-top: calc(-1 * clamp(20px, 4vw, 60px)); padding-top: clamp(4px, 2vw, 20px); }
+.cover-banner + .cover-frame .tagline { margin-top: 0; }
 
 /* The one long line of text on the leather: the lightest parchment (not the yellower lore tone), a touch heavier
    than the body, and a dark halo so the blind-tooled stars behind it never cross a stroke. */
+
 .tagline {
   max-width: 31em;
   margin: clamp(20px, 3vw, 36px) auto 0;
@@ -290,7 +297,8 @@ a { color: inherit; }
   max-width: 36em;
   margin: 16px auto 0;
   font-style: italic;
-  font-size: 1rem;
+  font-size: 1.08rem;
+  font-weight: 460;
   line-height: 1.45;
   text-align: center;
   color: var(--ink-soft);
@@ -429,6 +437,7 @@ a { color: inherit; }
   margin: 14px auto 0;
   max-width: 30em;
   font-style: italic;
+  font-weight: 460;
   text-align: center;
   color: var(--ink-soft);
 }
@@ -574,8 +583,8 @@ a { color: inherit; }
 .press-grid .pic img { width: 100%; background: var(--leather); }
 .press-grid .on-leather { background: var(--leather-bg); background-color: var(--leather); background-blend-mode: normal, multiply, normal; padding: 18px; }
 .press-grid .on-leather img { background: none; }
-.press-grid p { margin: 8px 0 0; font-size: 1rem; line-height: 1.4; }
-.press-grid .file { display: block; font-size: 0.9rem; color: var(--ink-soft); }
+.press-grid p { margin: 8px 0 0; font-size: 1.05rem; line-height: 1.4; }
+.press-grid .file { display: block; font-size: 0.95rem; color: var(--ink-soft); }
 .leaf .press-grid { max-width: none; }
 
 /* ── The Impressum page ─────────────────────────────────────────────────────────────── */
@@ -623,7 +632,7 @@ a { color: inherit; }
   .cover { padding: 12px 6px 0; }
   .cover-frame { border-width: 16px; padding: 28px 6px 110px; }
   .tagline { font-size: 1.2rem; line-height: 1.55; }
-  .cover-art { max-width: 420px; }
+  .cover-banner { margin: -12px -6px 0; }
   .sheet { margin-left: 8px; margin-right: 8px; }
   .leaf p { hyphens: auto; }
   .sheet::after { inset: 6px; }
